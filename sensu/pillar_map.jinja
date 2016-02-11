@@ -1,5 +1,9 @@
+# TODO: create Debian and RHEL default pillars with sensu.repo.manage = True
 {% set sensu = salt['grains.filter_by']({
     'default': {
+        'repo': {
+            'manage': False,
+        },
         'client': {
             'embedded_ruby': False,
             'nagios_plugins': False,

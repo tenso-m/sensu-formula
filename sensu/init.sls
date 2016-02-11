@@ -1,3 +1,5 @@
+{% from "sensu/pillar_map.jinja" import sensu with context -%}
+
 {% if grains['os_family'] == 'Debian' %}
 python-apt:
   pkg:
@@ -7,7 +9,7 @@ python-apt:
 {% endif %}
 
 sensu:
-  {% if grains['os_family'] != 'Windows' %}
+  {% if sensu.repo.manage %}
   pkgrepo.managed:
     - humanname: Sensu Repository
     {% if grains['os_family'] == 'Debian' %}
@@ -21,6 +23,7 @@ sensu:
     {% endif %}
     - require_in:
       - pkg: sensu
+      - pkg: uchiwa
   {% endif %}
   pkg:
     - installed
